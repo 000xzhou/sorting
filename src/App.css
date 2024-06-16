@@ -69,11 +69,11 @@
 
 .activeL {
   /* background-color: aqua; */
-  animation: swapL 5s;
+  animation: swapL 3s;
 }
 .activeR {
   /* background-color: burlywood; */
-  animation: swapR 5s;
+  animation: swapR 3s;
 }
 
 /*  for each box we need to add 4 rem in translateX.
@@ -87,7 +87,7 @@ translateX(4n)
   0% {
     transform: translateY(0) translateX(4rem);
   }
-  30% {
+  20% {
     transform: translateY(0) translateX(4rem);
   }
   50% {
@@ -106,7 +106,7 @@ translateX(4n)
   0% {
     transform: translateY(0) translateX(-4rem);
   }
-  30% {
+  20% {
     transform: translateY(0) translateX(-4rem);
   }
   50% {

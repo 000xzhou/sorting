@@ -17,13 +17,18 @@ const Bubble = (): JSX.Element => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setCurr(curr - 1);
-        }}
-      >
-        Prev
-      </button>
+      {curr <= 0 ? (
+        <button disabled>Prev</button>
+      ) : (
+        <button
+          onClick={() => {
+            if (curr > 0) setCurr(curr - 1);
+          }}
+        >
+          Prev
+        </button>
+      )}
+
       <button
         onClick={() => {
           setCurr(curr + 1);
