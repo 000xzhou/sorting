@@ -1,14 +1,55 @@
+import { useEffect, useState } from "react";
+
 const Bubble = (): JSX.Element => {
   const len = 10;
-  const x = new Bubble_Sort(len);
-  x.sort();
-  const history = x.get_history();
-  console.log(history.length);
-  return <div>
-    {history.map(([arr, i, j]) => <div>{
-      arr.toString() + " " + i + " " + j
-      }</div>)}
-  </div>;
+  const [bubble, setBubble] = useState(new Bubble_Sort(len));
+  const [loading, setLoading] = useState(false);
+  const [swap, setSwap] = useState(false);
+
+  useEffect(() => {
+    bubble.sort();
+    setLoading(true);
+  });
+
+  const [curr, setCurr] = useState(0);
+
+  if (!loading) return <div>...loading</div>;
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCurr(curr - 1);
+        }}
+      >
+        Prev
+      </button>
+      <button
+        onClick={() => {
+          setCurr(curr + 1);
+        }}
+      >
+        Next
+      </button>
+
+      <div className="arrContainer">
+        {bubble.get_history_n(curr).map((num: number, i: number) => (
+          <div
+            className={
+              "square " +
+              (i > bubble.get_j(curr) || i < bubble.get_j(curr) - 1
+                ? "inactive "
+                : "active ") +
+              (i !== 0 && i === bubble.get_j(curr) ? "activeR" : "") +
+              (i === bubble.get_j(curr) - 1 ? "activeL" : "")
+            }
+          >
+            {num}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 class Bubble_Sort {
@@ -18,7 +59,9 @@ class Bubble_Sort {
   history: number[][][] = []; // 3 x 1 x 1
 
   constructor(len: number) {
-    this.list = Array.from({length: len}, () => Math.floor(Math.random() * 100));
+    this.list = Array.from({ length: len }, () =>
+      Math.floor(Math.random() * 100)
+    );
     this.i = 0;
     this.j = 0;
   }
@@ -67,6 +110,14 @@ class Bubble_Sort {
 
   get_history(): number[][][] {
     return this.history;
+  }
+
+  get_history_n(curr: number): number[] {
+    return this.history[curr][0];
+  }
+
+  get_j(curr: number): number {
+    return this.history[curr][2][0];
   }
 
   toString(): string {
