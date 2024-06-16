@@ -76,6 +76,13 @@
   animation: swapR 5s;
 }
 
+/*  for each box we need to add 4 rem in translateX.
+if the box is 1 box away it's 4rem
+if it's 2 box away it's 8rem
+if it's 3 boxes away it's 12 and so on
+n = box away
+translateX(4n)
+*/
 @keyframes swapL {
   0% {
     transform: translateY(0) translateX(4rem);
