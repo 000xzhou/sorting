@@ -5,12 +5,13 @@
 // quick
 // radix
 // others...
+import Nav from "./components/Nav";
 
 const Layout = ({ children }) => {
   return (
     <div>
       <header>
-        <nav>Nav list here</nav>
+        <Nav />
       </header>
       <main>{children}</main>
       <footer>{/* Footer content goes here */}</footer>
