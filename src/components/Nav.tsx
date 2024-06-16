@@ -12,6 +12,9 @@ const Nav = () => {
     <nav>
       <ul>
         <li>
+          <Link to={"/"}>home</Link>
+        </li>
+        <li>
           <Link to={"bubble"}>Bubble</Link>
         </li>
         <li>
