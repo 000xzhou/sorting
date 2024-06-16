@@ -13,9 +13,17 @@ const Nav = () => {
       <ul>
         <li>
           <Link to={"bubble"}>Bubble</Link>
+        </li>
+        <li>
           <Link to={"insertion"}>Insertion</Link>
+        </li>
+        <li>
           <Link to={"merge"}>merge</Link>
+        </li>
+        <li>
           <Link to={"quick"}>quick</Link>
+        </li>
+        <li>
           <Link to={"radix"}>radix</Link>
         </li>
       </ul>
