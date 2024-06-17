@@ -4,51 +4,71 @@ const Bubble = (): JSX.Element => {
   const len = 10;
   const [bubble, setBubble] = useState(new Bubble_Sort(len));
   const [loading, setLoading] = useState(false);
-  const [swap, setSwap] = useState(false);
 
   useEffect(() => {
     bubble.sort();
     setLoading(true);
-  });
+  }, [bubble]);
 
+  const [swap, setSwap] = useState(true);
   const [curr, setCurr] = useState(0);
+  // const [direction, setDirection] = useState("right");
+  const [rightStyle, setRightStyle] = useState("");
+  const [leftStyle, setLeftStyle] = useState("");
 
   if (!loading) return <div>...loading</div>;
 
+  const handlePrev = () => {
+    if (curr > 0) {
+      setCurr(curr - 1);
+      if (swap) {
+        setRightStyle("activeRB");
+        setLeftStyle("activeLB");
+      }
+    }
+  };
+
+  const handleNext = () => {
+    setCurr(curr + 1);
+    // setSwap();
+    if (swap) {
+      setRightStyle("activeR");
+      setLeftStyle("activeL");
+    }
+  };
+
+  //todo: function that controls next and back click (as it needs to display the same bubble 2 times.)
+  // todo: first time is to target the curr index. 2nd click is to swap. So the front end don't look weird.
+  // Maybe you got better idea or got no idea what i'm talking about.
+
+  const getClassNames = (index: number) => {
+    let classNames = "square ";
+    const j = bubble.get_j(curr);
+    if (index > j || index < j - 1) {
+      classNames += "inactive ";
+    } else {
+      classNames += "active ";
+    }
+    if (index === j) {
+      classNames += rightStyle;
+    }
+    if (index === j - 1) {
+      classNames += leftStyle;
+    }
+    return classNames;
+  };
+
   return (
     <div>
-      {curr <= 0 ? (
-        <button disabled>Prev</button>
-      ) : (
-        <button
-          onClick={() => {
-            if (curr > 0) setCurr(curr - 1);
-          }}
-        >
-          Prev
-        </button>
-      )}
-
-      <button
-        onClick={() => {
-          setCurr(curr + 1);
-        }}
-      >
-        Next
+      <button onClick={handlePrev} disabled={curr <= 0}>
+        Prev
       </button>
+
+      <button onClick={handleNext}>Next</button>
 
       <div className="arrContainer">
         {bubble.get_history_n(curr).map((num: number, i: number) => (
-          <div
-            className={
-              "square " +
-              (i > bubble.get_j(curr) || i < bubble.get_j(curr) - 1
-                ? "inactive "
-                : "active ") +
-              (i !== 0 && i === bubble.get_j(curr) ? "activeR" : "") +
-              (i === bubble.get_j(curr) - 1 ? "activeL" : "")
-            }
-          >
+          <div key={i} className={getClassNames(i)}>
             {num}
           </div>
         ))}
@@ -81,6 +101,7 @@ class Bubble_Sort {
       return this.next();
     }
     this.history.push([this.list.slice(), [this.i], [this.j]]);
+
     if (this.list[this.j] > this.list[this.j + 1]) {
       const temp = this.list[this.j];
       this.list[this.j] = this.list[this.j + 1];
@@ -94,6 +115,7 @@ class Bubble_Sort {
     for (; this.i < this.list.length; this.i++) {
       for (this.j = 0; this.j < this.list.length - this.i - 1; this.j++) {
         this.history.push([this.list.slice(), [this.i], [this.j]]);
+
         if (this.list[this.j] > this.list[this.j + 1]) {
           const temp = this.list[this.j];
           this.list[this.j] = this.list[this.j + 1];
@@ -111,6 +133,10 @@ class Bubble_Sort {
       }
     }
     return true;
+  }
+
+  isSwap(): boolean {
+    return this.swap;
   }
 
   get_history(): number[][][] {

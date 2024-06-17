@@ -75,7 +75,12 @@
   /* background-color: burlywood; */
   animation: swapR 3s;
 }
-
+.activeRB {
+  animation: swapRBack 3s;
+}
+.activeLB {
+  animation: swapLBack 3s;
+}
 /*  for each box we need to add 4 rem in translateX.
 if the box is 1 box away it's 4rem
 if it's 2 box away it's 8rem
@@ -119,5 +124,42 @@ translateX(4n)
 
   100% {
     transform: translateY(0) translateX(0);
+  }
+}
+
+@keyframes swapLBack {
+  0% {
+    transform: translateX(4rem);
+  }
+  20% {
+    transform: translateX(4rem);
+  }
+  50% {
+    transform: ranslateX(4rem);
+  }
+  70% {
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes swapRBack {
+  0% {
+    transform: translateX(-4rem);
+  }
+  20% {
+    transform: translateX(-4rem);
+  }
+  50% {
+    transform: translateX(-4rem);
+  }
+
+  70% {
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
